@@ -104,11 +104,11 @@ function mu_custom_gallery( $atts ) {
 		$output .= '<div class="w-full lg:w-1/' . esc_attr( $data['columns'] ) . ' lg:px-4 my-4">';
 		$output .= '<div x-data="{ imgModal : false, imgModalSrc : \'\', imgModalDesc : \'\' }" x-on:keydown.escape="imgModal = \'\'">';
 		$output .= '<template @img-modal.window="imgModal = true; imgModalSrc = $event.detail.imgModalSrc; imgModalDesc = $event.detail.imgModalDesc;" x-if="imgModal">';
-		$output .= '<div x-transition:enter="transition ease-out duration-100" x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90" x-on:click.away="imgModalSrc = \'\'" class="p-2 fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center bg-black-overlay-20">';
+		$output .= '<div x-transition:enter="transition ease-out duration-100" x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90" x-on:click.away="imgModalSrc = \'\'" class="p-2 fixed w-full h-100 inset-0 z-100 overflow-hidden flex justify-center items-center bg-black-overlay-30">';
 		$output .= '<div x-on:click.away="imgModal = \'\'" class="flex flex-col max-w-3xl max-h-full overflow-auto">';
 		$output .= '<div class="z-50">';
 		$output .= '<button x-on:click="imgModal = \'\'" class="float-right pt-2 pr-2 outline-none focus:outline-none">';
-		$output .= '<svg class="fill-current text-white " xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">';
+		$output .= '<svg class="fill-current text-white h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">';
 		$output .= '<path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">';
 		$output .= '</path>';
 		$output .= '</svg>';
@@ -133,3 +133,20 @@ function mu_custom_gallery( $atts ) {
 	return $output;
 }
 add_shortcode( 'gallery', 'mu_custom_gallery' );
+
+/**
+ * Removes unneeded form fields from the Dashboard for Gallery.
+ */
+function mu_gallery_hide_options() {
+	echo '<style>';
+	echo '.gallery-settings label[for=gallery-settings-link-to],
+	.gallery-settings #gallery-settings-link-to,
+	.gallery-settings label[for=gallery-settings-size],
+	.gallery-settings #gallery-settings-size,
+	.gallery-settings label[for=gallery-settings-random-order],
+	.gallery-settings #gallery-settings-random-order {
+		display: none;
+	}';
+	echo '</style>';
+}
+add_action( 'admin_head', 'mu_gallery_hide_options' );
