@@ -125,7 +125,11 @@ function mu_custom_gallery( $atts ) {
 		$output .= '</div>';
 		$output .= '<div x-data="{}">';
 		$output .= '<img x-on:click="$dispatch(\'img-modal\', {  imgModalSrc: \'' . esc_url( $thumbnail ) . '\', imgModalDesc: \'' . wp_kses_post( $image->post_excerpt ) . '\' })" src="' . esc_url( $thumbnail ) . '" alt="' . esc_attr( get_post_meta( $image->ID, '_wp_attachment_image_alt', true ) ) . '" class="cursor-pointer" />';
-		$output .= '<div class="bg-gray-100 px-4 py-3 border border-t-0">' . esc_attr( $image->post_excerpt ) . '</div>';
+
+		if ( $data['captions'] ) {
+			$output .= '<div class="bg-gray-100 px-4 py-3 border border-t-0">' . esc_attr( $image->post_excerpt ) . '</div>';
+		}
+
 		$output .= '</div>';
 		$output .= '</div>';
 	}
