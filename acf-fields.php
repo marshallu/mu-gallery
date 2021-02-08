@@ -13,7 +13,7 @@ if( function_exists('acf_add_local_field_group') ):
 		'fields' => array(
 			array(
 				'key' => 'field_60216f94a1124',
-				'label' => 'External URL',
+				'label' => 'Image Link to URL',
 				'name' => 'mu_gallery_external_url',
 				'type' => 'url',
 				'instructions' => 'If you wish to link from a gallery to an external link, you can include a URL here.',
