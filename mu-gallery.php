@@ -13,6 +13,12 @@
  * Author: Christopher McComas
  */
 
+if ( ! class_exists( 'ACF' ) ) {
+	return new WP_Error( 'broke', __( 'Advanced Custom Fields is required for this plugin.', 'my_textdomain' ) );
+}
+
+require plugin_dir_path( __FILE__ ) . '/acf-fields.php';
+
 /**
  * Flush rewrites whenever the plugin is activated.
  */
@@ -124,7 +130,12 @@ function mu_custom_gallery( $atts ) {
 		$output .= '</template>';
 		$output .= '</div>';
 		$output .= '<div x-data="{}">';
-		$output .= '<img x-on:click="$dispatch(\'img-modal\', {  imgModalSrc: \'' . esc_url( $thumbnail ) . '\', imgModalDesc: \'' . wp_kses_post( $image->post_excerpt ) . '\' })" src="' . esc_url( $thumbnail ) . '" alt="' . esc_attr( get_post_meta( $image->ID, '_wp_attachment_image_alt', true ) ) . '" class="cursor-pointer" />';
+
+		if ( get_field( 'mu_gallery_external_url', $image->ID ) ) {
+			$output .= '<a href="' . get_field( 'mu_gallery_external_url', $image->ID ) . '"><img src="' . esc_url( $thumbnail ) . '" alt="' . esc_attr( get_post_meta( $image->ID, '_wp_attachment_image_alt', true ) ) . '"></a>';
+		} else {
+			$output .= '<img x-on:click="$dispatch(\'img-modal\', {  imgModalSrc: \'' . esc_url( $thumbnail ) . '\', imgModalDesc: \'' . wp_kses_post( $image->post_excerpt ) . '\' })" src="' . esc_url( $thumbnail ) . '" alt="' . esc_attr( get_post_meta( $image->ID, '_wp_attachment_image_alt', true ) ) . '" class="cursor-pointer" />';
+		}
 
 		if ( $data['captions'] ) {
 			$output .= '<div class="bg-gray-100 px-4 py-3 border border-t-0">' . esc_attr( $image->post_excerpt ) . '</div>';
