@@ -133,7 +133,7 @@ function mu_custom_gallery( $atts ) {
 			// echo '<pre>';
 			// echo print_r( $thumbnail );
 			// echo '</pre><br><br>';
-			echo "THUMBNAIL: " . get_the_post_thumbnail_url($image->ID,'large');
+			echo "THUMBNAIL: " . get_the_post_thumbnail_url($image->ID,'large') . " ID: " . $image->ID;
 			$thumbnail = $thumbnail[0];
 		} else {
 			$thumbnail = wp_get_attachment_image_src( $image->ID, 'large' );
