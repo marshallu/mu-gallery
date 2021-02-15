@@ -130,6 +130,7 @@ function mu_custom_gallery( $atts ) {
 
 		if ( $data['announcements'] ) {
 			$thumbnail = $image['guid'];
+			$thumbnail = '';
 		} else {
 			$thumbnail = wp_get_attachment_image_src( $image->ID, 'large' );
 			$thumbnail = $thumbnail[0];
