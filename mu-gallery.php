@@ -129,7 +129,7 @@ function mu_custom_gallery( $atts ) {
 	foreach ( $images as $image ) {
 
 		if ( $data['announcements'] ) {
-			$thumbnail = wp_get_attachment_url();
+			$thumbnail = wp_get_attachment_url( $image->ID );
 		} else {
 			$thumbnail = wp_get_attachment_image_src( $image->ID, 'large' );
 			$thumbnail = $thumbnail[0];
