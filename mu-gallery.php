@@ -127,10 +127,15 @@ function mu_custom_gallery( $atts ) {
 	$output = '<div class="flex flex-wrap lg:-mx-4">';
 
 	foreach ( $images as $image ) {
-		$test = wp_get_attachment_url();
-		$thumbnail = wp_get_attachment_image_src( $image->ID, 'large' );
+
+		if ( $data['announcements'] ) {
+			$thumbnail = wp_get_attachment_url();
+		} else {
+			$thumbnail = wp_get_attachment_image_src( $image->ID, 'large' );
+			$thumbnail = $thumbnail[0];
+		}
+
 		$image_alt = get_post_meta( $image->ID, '_wp_attachment_image_alt', true );
-		$thumbnail = $thumbnail[0];
 
 		$output .= '<div class="w-full lg:w-1/' . esc_attr( $data['columns'] ) . ' lg:px-4 my-4">';
 		$output .= '<div x-data="{ imgModal : false, imgModalSrc : \'\', imgModalDesc : \'\' }" x-on:keydown.escape="imgModal = \'\'">';
@@ -153,7 +158,7 @@ function mu_custom_gallery( $atts ) {
 		$output .= '</div>';
 		$output .= '</template>';
 		$output .= '</div>';
-		$output .= '<div x-data="{}" ' . $test . '>';
+		$output .= '<div x-data="{}">';
 
 		if ( get_field( 'mu_gallery_external_url', $image->ID ) ) {
 			$output .= '<a href="' . get_field( 'mu_gallery_external_url', $image->ID ) . '"><img src="' . esc_url( $thumbnail ) . '" alt="' . esc_attr( get_post_meta( $image->ID, '_wp_attachment_image_alt', true ) ) . '"></a>';
