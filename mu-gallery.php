@@ -100,24 +100,24 @@ function mu_custom_gallery( $atts ) {
 			'post_mime_type' => 'image',
 			'orderby'        => $data['orderby'],
 		);
+
+		if ( ! empty( $data['include'] ) ) {
+			$args['include'] = $data['include'];
+		} else {
+			$args['post_parent'] = $data['id'];
+			$args['numberposts'] = -1;
+		}
+
+		if ( '' === $args['include'] ) {
+			$args['orderby'] = 'date';
+			$args['order']   = 'asc';
+		}
 	}
 
 	if ( $data['columns'] <= 3 ) {
 		$data['columns'] = 3;
 	} elseif ( $data['columns'] >= 5 ) {
 		$data['columns'] = 5;
-	}
-
-	if ( ! empty( $data['include'] ) ) {
-		$args['include'] = $data['include'];
-	} else {
-		$args['post_parent'] = $data['id'];
-		$args['numberposts'] = -1;
-	}
-
-	if ( '' === $args['include'] ) {
-		$args['orderby'] = 'date';
-		$args['order']   = 'asc';
 	}
 
 	$images = get_posts( $args );
