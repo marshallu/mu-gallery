@@ -77,8 +77,10 @@ function mu_custom_gallery( $atts ) {
 
 	if ( $data['announcements'] ) {
 		$args = array(
-			'post_type'   => 'attachment',
-			'post_status' => 'inherit',
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'post_mime_type' => 'image',
+			'numberposts'    => -1,
 			'meta_query'     => array( // phpcs:ignore
 				'relation' => 'AND',
 				array(
@@ -125,6 +127,7 @@ function mu_custom_gallery( $atts ) {
 	$output = '<div class="flex flex-wrap lg:-mx-4">';
 
 	foreach ( $images as $image ) {
+		$test = wp_get_attachment_url();
 		$thumbnail = wp_get_attachment_image_src( $image->ID, 'large' );
 		$image_alt = get_post_meta( $image->ID, '_wp_attachment_image_alt', true );
 		$thumbnail = $thumbnail[0];
@@ -150,7 +153,7 @@ function mu_custom_gallery( $atts ) {
 		$output .= '</div>';
 		$output .= '</template>';
 		$output .= '</div>';
-		$output .= '<div x-data="{}">';
+		$output .= '<div x-data="{}" ' . $test . '>';
 
 		if ( get_field( 'mu_gallery_external_url', $image->ID ) ) {
 			$output .= '<a href="' . get_field( 'mu_gallery_external_url', $image->ID ) . '"><img src="' . esc_url( $thumbnail ) . '" alt="' . esc_attr( get_post_meta( $image->ID, '_wp_attachment_image_alt', true ) ) . '"></a>';
