@@ -132,7 +132,6 @@ function mu_custom_gallery( $atts ) {
 			$thumbnail = wp_get_attachment_image_src( $image->ID, 'large' );
 			$thumbnail = $thumbnail[0];
 			$thumbnail = str_replace( 'wp-content/uploads', 'files', $thumbnail );
-			echo $thumbnail . '<br><br>';
 		} else {
 			$thumbnail = wp_get_attachment_image_src( $image->ID, 'large' );
 			$thumbnail = $thumbnail[0];
