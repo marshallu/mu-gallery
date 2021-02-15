@@ -75,26 +75,30 @@ function mu_custom_gallery( $atts ) {
 		$atts
 	);
 
-	$args = array(
-		'post_type'      => 'attachment',
-		'post_status'    => 'inherit',
-		'post_mime_type' => 'image',
-		'orderby'        => $data['orderby'],
-	);
-
 	if ( $data['announcements'] ) {
-		$args['meta_query'] = array( // phpcs:ignore
-			'relation' => 'AND',
-			array(
-				'key'   => 'mymu_slides_add_to_mymu_slideshow', // phpcs:ignore
-				'value' => true, // phpcs:ignore
+		$args = array(
+			'post_type'   => 'attachment',
+			'post_status' => 'inherit',
+			'meta_query'     => array( // phpcs:ignore
+				'relation' => 'AND',
+				array(
+					'key'   => 'mymu_slides_add_to_mymu_slideshow', // phpcs:ignore
+					'value' => true, // phpcs:ignore
+				),
+				array(
+					'key'     => 'mymu_slides_expire_date',
+					'value'   => date( 'Y-m-d h:i:s' ), // phpcs:ignore
+					'type'    => 'DATETIME',
+					'compare' => '>',
+				),
 			),
-			array(
-				'key'     => 'mymu_slides_expire_date',
-				'value'   => date( 'Y-m-d h:i:s' ), // phpcs:ignore
-				'type'    => 'DATETIME',
-				'compare' => '>',
-			),
+		);
+	} else {
+		$args = array(
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'post_mime_type' => 'image',
+			'orderby'        => $data['orderby'],
 		);
 	}
 
