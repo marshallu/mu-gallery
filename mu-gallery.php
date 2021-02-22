@@ -80,6 +80,8 @@ function mu_custom_gallery( $atts ) {
 			'post_type'      => 'attachment',
 			'post_status'    => 'inherit',
 			'post_mime_type' => 'image',
+			'orderby'        => array( 'meta_value_num', 'date' ),
+			'meta_key'       => 'order_by',
 			'numberposts'    => -1,
 			'meta_query'     => array( // phpcs:ignore
 				'relation' => 'AND',
